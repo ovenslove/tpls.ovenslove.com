@@ -1,0 +1,14 @@
+{
+  "1.1.8": [{
+      "type": "rebuild",
+      "content": "重构"
+    }, {
+      "type": "update",
+      "content": "更新"
+    },
+    {
+      "type": "add",
+      "content": "新增"
+    }
+  ]
+}
