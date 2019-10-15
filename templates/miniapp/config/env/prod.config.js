@@ -4,8 +4,8 @@ const config = {
     APP_ID: "",
     API_URL: "",
     SERVER_KEY: "",
-    MINI_APPS:{
-        STORE_APP:""
+    MINI_APPS: {
+        STORE_APP: ""
     }
 }
 // 导出配置项

@@ -1,10 +1,8 @@
 //app.js
-import Hack from "./plugins/plugin.hack";
 import Router from "./plugins/plugin.router";
 import Log from "./plugins/plugin.log";
 import utils from "./utils/utils";
 import config from "./config/config";
-Hack.install({});
 App({
   onLaunch: function (options) {
     Router.install(this, {});

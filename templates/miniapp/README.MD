@@ -10,9 +10,10 @@
         |---env     环境配置
         |---config.js 配置入口
         |---userConfig.js 用户配置
-        |---version.json 版本信息
+        |---version.js 版本信息
 |---lib 第三方库
-        |---wxParse
+        |---wxParse 富文本解析
+        |---PDTracker 数据埋点
 |---pages   页面文件夹
         |---article 模块
                 |---index   单页面
@@ -33,6 +34,7 @@
 |---app.js
 |---app.json
 |---app.wxss
+|---readme.md 文档说明
 ```
 
 * Tips: **less转wxss**

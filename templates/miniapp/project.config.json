@@ -14,11 +14,13 @@
 	"compileType": "miniprogram",
 	"libVersion": "2.5.2",
 	"appid": "wx32af1b7e48b43015",
-	"projectname": "e-radio-wx",
+	"projectname": "invitation-gift",
 	"debugOptions": {
 		"hidedInDevtools": []
 	},
 	"isGameTourist": false,
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
 	"condition": {
 		"search": {
 			"current": -1,

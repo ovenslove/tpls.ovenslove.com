@@ -1,6 +1,0 @@
-<!-- toast模板 -->
-<template name="toast-base">
-    <view class="toast-bodyContainer">
-        {{content}}
-    </view>
-</template>

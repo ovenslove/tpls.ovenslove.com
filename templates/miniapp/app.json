@@ -10,5 +10,6 @@
   },
   "navigateToMiniProgramAppIdList": [
     ""
-  ]
+  ],
+  "sitemapLocation": "sitemap.json"
 }

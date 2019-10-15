@@ -1,8 +1,9 @@
 // 定义配置项
+import VERSION from './version';
+
 const config = {
-    APP_ID: 'appid',
     ENV: 'dev',
-    VERSION: 'v1.1.0'
+    VERSION: VERSION.lastVersion
 }
 
 // 导出配置项
