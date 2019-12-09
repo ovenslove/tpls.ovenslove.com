@@ -4,6 +4,7 @@ const config = {
     APP_ID: "",
     API_URL: "",
     SERVER_KEY: "",
+    DEBUG: false,
     MINI_APPS: {
         STORE_APP: ""
     }

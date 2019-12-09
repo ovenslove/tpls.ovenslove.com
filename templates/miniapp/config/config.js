@@ -8,7 +8,7 @@ let commonConfig = require('./base/base.config');
 let envConfig = require(`./env/${userConfig.ENV || 'dev'}.config`);
 // 合并配置项
 Object.assign(config, commonConfig, envConfig);
-if (config.ENV === 'dev') config.DEBUG = true;
-if (config.DEBUG) console.log(config);
+// 注入wx对象
+wx.$CONFIG = config;
 // 导出配置项
 module.exports = config;

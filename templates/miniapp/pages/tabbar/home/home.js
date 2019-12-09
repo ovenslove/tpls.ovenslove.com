@@ -1,4 +1,5 @@
 // pages/tabbar/home/home.js
+// import Log from "../../../plugins/plugin.log";
 Page({
 
   /**
@@ -12,7 +13,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    // for (let i = 0; i < 5; i++) {
+    //   wx.$API.testRequest();
+    // }
+    
   },
 
   /**
@@ -26,14 +30,14 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    // Log.info('onshow')
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    // Log.info('onhide')
   },
 
   /**
@@ -62,5 +66,11 @@ Page({
    */
   onShareAppMessage: function () {
 
+  },
+  getUserInfoFn(e) {
+    wx.$USER.decodeUserInfo(e.detail).then(data=>{
+      console.log(data.result);
+      // Log.info(JSON.stringify(data.result));
+    }).catch(err=>{});
   }
 })

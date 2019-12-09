@@ -12,9 +12,9 @@
 		"autoAudits": false
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.5.2",
-	"appid": "wx32af1b7e48b43015",
-	"projectname": "invitation-gift",
+	"libVersion": "2.9.4",
+	"appid": "wxc4d9f25bc6f260c3",
+	"projectname": "miniApp",
 	"debugOptions": {
 		"hidedInDevtools": []
 	},
@@ -38,9 +38,21 @@
 			"currentL": -1,
 			"list": []
 		},
+		"gamePlugin": {
+			"current": -1,
+			"list": []
+		},
 		"miniprogram": {
 			"current": 0,
-			"list": []
+			"list": [
+				{
+					"id": 0,
+					"name": "pages/tabbar/home/home",
+					"pathName": "pages/tabbar/home/home",
+					"query": "debugOnline=1",
+					"scene": 1011
+				}
+			]
 		}
 	}
 }

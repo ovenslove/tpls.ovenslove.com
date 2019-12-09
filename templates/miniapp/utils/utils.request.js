@@ -18,119 +18,61 @@ const PAGE_HANDLE_ERROR_CODE = [500, 9999404, 156600017];
 export const requestFn = ({
   method = 'GET',
   host = config.API_URL,
-  relativePath = true,
-  mock = false,
   url = '',
   data = {},
+  token = true,
+  header = {
+    'content-type': 'application/json'
+  },
   showLoading = false, // 是否菊花
-  showModal = true // 是否弹窗
+  showModal = false // 是否弹窗
 }) => {
-  if (typeof url === 'string' && url) {
-    let _opts = arguments[0] || {};
-    if (!relativePath) {
-      host = ''
-    }
-    if (config.ENV !== 'prod' && mock) {
-      host = config.MOCK_URL
-    }
-    // 单接口请求，返回一个数据
-    return new Promise((resolve, reject) => {
-      // 展示loading动画
-      if (showLoading) {
-        wx.showLoading({
-          title: '',
-          mask: true,
-          success() {},
-          fail() {},
-          complete() {}
-        });
+  return new Promise((resolve, reject) => {
+    // 展示loading动画
+    if (showLoading) wx.showLoading();
+    // token校验
+    if (token) {
+      let _token = wx.$USER.getToken();
+      if (_token) {
+        header[wx.$CONFIG.TOKEN_PREFIX] = _token
+      } else {
+        return;
       }
-      // 认证成功，开始请求数据并返回结果
-      wx.request({
-        method: method.toUpperCase(),
-        url: host + url,
-        header: {
-          'content-type': 'application/json'
-        },
-        data: data,
-        success: function (res) {
-          if (res.data.code === 200) {
-            resolve(res.data);
-          } else if ([401, 403, 404].includes(parseInt(res.data.code))) {
-            // 授权相关错误，需要重新授权
-            // 重新登录并请求
-            // requestFn(_opts);
-          } else if (res.data && res.data.code && PAGE_HANDLE_ERROR_CODE.includes(parseInt(res.data.code))) {
-            // 需要页面对错误码进行特殊操作
-            reject(res.data);
+    }
+    // 开始请求
+    wx.request({
+      method: method.toUpperCase(),
+      url: host + url,
+      header,
+      data,
+      success: function (res) {
+        resolve(res.data);
+      },
+      fail: function (err) {
+        if (showModal) {
+          // 可以弹窗
+          let content = '未知错误';
+          if (typeof err['errMsg'] === 'string') {
+            content = err.errMsg.substr(0, 100)
           } else {
-            wx.hideLoading();
-            // 其他错误状态，需要处理
-            if (showModal) {
-              // 可以弹窗
-              if (typeof res['data'] === 'string') {
-                res.data = res.data.substr(0, 100)
-                wx.showModal({
-                  title: '温馨提示',
-                  showCancel: false,
-                  content: res.data,
-                  success: function (data) {
-                    if (data.confirm) {
-                      reject(res.data);
-                    } else if (data.cancel) {
-                      // nothing to do
-                    }
-                  }
-                })
-              } else {
-                wx.showModal({
-                  title: '温馨提示',
-                  showCancel: false,
-                  content: error[res.data.code] || res.data.message || '未知错误',
-                  success: function (data) {
-                    if (data.confirm) {
-                      console.log('错误返回数据', res);
-                      reject(res.data);
-                    } else if (data.cancel) {}
-                  }
-                })
-              }
-            } else {
-              // 不需要弹窗
-              reject(res);
+            content = JSON.stringify(err);
+          }
+          wx.showModal({
+            title: '温馨提示',
+            showCancel: false,
+            content: content,
+            success: function (data) {
+              if (data.confirm) reject(err);
             }
-          }
-        },
-        fail: function (err) {
+          })
+        } else {
           reject(err);
-          wx.hideLoading();
-        },
-        complete: function (res) {
-          if (showLoading) {
-            wx.hideLoading();
-          }
-          if (config.env === 'dev') {
-            console.log('请求完毕-->', url + utils.json2Url(data), res.data || res.errMsg);
-          } else {
-            console.log('请求完毕-->', url + utils.json2Url(data), res.data || res.errMsg)
-          }
-          // 写入日志
-          wx.$log('log', 'Request:' + url + utils.json2Url(data), res.data || res.errMsg)
         }
-      })
-    });
-  } else if (url instanceof Array && url.length > 0) {
-    // 如果url为数组，则属于多接口请求，开始递归
-    return Promise.all(
-      url.map((val, index, arr) => {
-        return requestFn({
-          method,
-          host,
-          url: val,
-          data: data[index]
-        })
-      }));
-  } else {
-    console.log('url为空')
-  }
+      },
+      complete: function (res) {
+        if (showLoading) wx.hideLoading();
+        console.log('请求完毕-->', url + utils.json2Url(data), res.data || res.errMsg);
+      }
+    })
+  });
 }

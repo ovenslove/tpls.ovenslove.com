@@ -1,2 +1,3 @@
-<!--pages/tabbar/home/home.wxml-->
-<text>pages/tabbar/home/home.wxml</text>
+<view class="container">
+    <button class="default" size="default" type="default" open-type="getUserInfo" bindgetuserinfo="getUserInfoFn">登录授权</button>
+</view>

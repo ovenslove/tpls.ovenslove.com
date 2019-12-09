@@ -2,7 +2,7 @@
 import VERSION from './version';
 
 const config = {
-    ENV: 'dev',
+    ENV: 'prod',
     VERSION: VERSION.lastVersion
 }
 

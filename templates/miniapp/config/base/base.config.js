@@ -1,6 +1,7 @@
 // 定义配置项
 const config = {
-  USERINFO_WX_CACHE: '',
+  TOKEN_PREFIX: 'wxtoken',
+  USERINFO_CACHE: 'userInfoCache',
   USERINFO_YATSEN_CACHE: '',
   SEARCH_HISTORY_CACHE: ''
 }

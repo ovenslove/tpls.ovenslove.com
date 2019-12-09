@@ -1,57 +1,30 @@
-const Log = {};
-/**
- * @function 路由拦截器
- *
- * @param {*} App
- * @param {*} config
- */
+var log = wx.getRealtimeLogManager ? wx.getRealtimeLogManager() : null
 
-Log.install = function install(App, config) {
-  console.log('Log-Plugin installed');
-  let logger = wx.getLogManager({
-    level: 1
-  })
-  wx.$log = (type = 'log', message = '', data = {}) => {
-    switch (type) {
-      case 'log':
-        log(logger, message, data);
-        break;
-      case 'warn':
-        warn(logger, message, data);
-        break;
-      case 'error':
-        error(logger, message, data);
-        break;
-      case 'debug':
-        debug(logger, message, data);
-        break;
-      case 'info':
-        info(logger, message, data);
-        break;
-      default:
-        break;
+module.exports = {
+    debug() {
+        if (!log) return
+        log.debug.apply(log, arguments)
+    },
+    info() {
+        if (!log) return
+        log.info.apply(log, arguments)
+    },
+    warn() {
+        if (!log) return
+        log.warn.apply(log, arguments)
+    },
+    error() {
+        if (!log) return
+        log.error.apply(log, arguments)
+    },
+    setFilterMsg(msg) { // 从基础库2.7.3开始支持
+        if (!log || !log.setFilterMsg) return
+        if (typeof msg !== 'string') return
+        log.setFilterMsg(msg)
+    },
+    addFilterMsg(msg) { // 从基础库2.8.1开始支持
+        if (!log || !log.addFilterMsg) return
+        if (typeof msg !== 'string') return
+        log.addFilterMsg(msg)
     }
-  }
 }
-
-function log(logger, message, data) {
-  logger.log(`[log]->${message}->${JSON.stringify(data)}`);
-}
-
-function error(logger, message, data) {
-  logger.log(`[error]->${message}->${JSON.stringify(data)}`);
-}
-
-function debug(logger, message, data) {
-  logger.debug(`[debug]->${message}->${JSON.stringify(data)}`);
-}
-
-function warn(logger, message, data) {
-  logger.warn(`[warn]->${message}->${JSON.stringify(data)}`);
-}
-
-function info(logger, message, data) {
-  logger.info(`[info]->${message}->${JSON.stringify(data)}`);
-}
-
-export default Log;
