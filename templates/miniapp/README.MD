@@ -44,3 +44,7 @@ vscode编辑器安装插件Easy WXLESS
   > 为了更好的维护页面路由，支持无限级别的路由规则
   * 由wx.navigate2() 方法代替 wx.navigateTo()方法，参数一致
   * 由wx.navigateBack2() 方法代替 wx.navigateBack()方法，参数一致
+
+#### 远程调试
+* 用户发起反馈，携带日志上报
+* 生成携带debugOnline=1的小程序码，即可开启远程日志调试

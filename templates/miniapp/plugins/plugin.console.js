@@ -1,17 +1,9 @@
 'use strict';
 const logger = wx.getLogManager();
 const realLogger = wx.getRealtimeLogManager ? wx.getRealtimeLogManager() : null;
-let appLaunchOptions = wx.getLaunchOptionsSync();
-let debugOnline = Boolean(appLaunchOptions.query.debugOnline) || false;
-let loggerFunArr = ((l) => {
-  let fun = [];
-  for (let key in l) {
-    if (typeof l[key] === 'function') {
-      fun.push(key);
-    }
-  }
-  return fun;
-})(logger);
+const appLaunchOptions = wx.getLaunchOptionsSync();
+const debugOnline = Boolean(appLaunchOptions.query.debugOnline) || false;
+// 重写console
 console = (function (origConsole) {
   if (!console) console = {};
   let vConsole = {};
@@ -19,11 +11,9 @@ console = (function (origConsole) {
     vConsole[key] = function () {
       if (['log', 'info', 'warn', 'error'].findIndex(k => k === key) >= 0) {
         logger[key](...arguments);
-        if (debugOnline) realLogger[key === 'log' ? 'info' : key](`[${key}] : ${JSON.stringify(arguments)}`);
+        if (realLogger && debugOnline) realLogger[key === 'log' ? 'info' : key](`[${key}] : ${JSON.stringify(arguments)}`);
       }
-      if (wx.$CONFIG && wx.$CONFIG.DEBUG) {
-        origConsole[key](...arguments);
-      }
+      if (wx.$CONFIG && wx.$CONFIG.DEBUG) origConsole[key](...arguments)
     }
   }
   return vConsole;
