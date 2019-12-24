@@ -1,7 +1,4 @@
-// const config = require("../config/config");
-import {
-  config
-} from "../config/config";
+'use strict';
 /**
  * @function 计算字符串的字节数
  * @param {string} str  需要计算的字符串
@@ -125,33 +122,6 @@ function isUrl(url) {
   return /^(?=^.{3,255}$)(http(s)?:\/\/)?(www\.)?[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+(:\d+)*((\/\w+)+(\.\w+|(\/))?)?([\?&]\w+=\w*)*(#\w*)?$/ig.test(url);
 }
 
-/**
-* @function 解析json
-* @param {String} jsonstr 字符串json值
-* @returns {Array|Object}
-**/
-function jsonParse(jsonstr) {
-  try {
-    return JSON.parse(jsonstr);
-  } catch (e) {
-    return jsonstr;
-  }
-}
-
-/**
-* @author dven 
-* @description 函数节流 
-* @param {Function} method 要执行的函数
-* @param {Object} context 作用域
-* @param {Number} time 节流时间
-*/
-function throttle(method, context, time){
-  clearTimeout(method.tId);
-  method.tId = setTimeout(function(){
-      method.call(context);
-  }, time);
-};
-
 function isObject(val) {
   return val != null && typeof val === 'object' && Array.isArray(val) === false;
 };
@@ -161,19 +131,19 @@ function isEmpty(val) {
 }
 
 /**
-* @function 遍历对象返回 get请求url的参数拼接
-* @param {data}  Object 参数对象
-*/
-function getDataUrl(data){
+ * @function 遍历对象返回 get请求url的参数拼接
+ * @param {data}  Object 参数对象
+ */
+function getDataUrl(data) {
   let url = '';
   for (let item in data) {
-      if (typeof data[item] === 'boolean' || !isEmpty(data[item]) && data[item] != '') {
-          if (url == '') {
-              url += `?${item}=${data[item]}`;
-          } else {
-              url += `&${item}=${data[item]}`;
-          }
+    if (typeof data[item] === 'boolean' || !isEmpty(data[item]) && data[item] != '') {
+      if (url == '') {
+        url += `?${item}=${data[item]}`;
+      } else {
+        url += `&${item}=${data[item]}`;
       }
+    }
   }
   return url;
 };
@@ -200,20 +170,7 @@ function json2Url(data) {
   return urlStr;
 }
 
-/**
-* @author dven 
-* @description 前端自己做分页 
-* @param {Number} pageNum 页面显示的最大数
-* @param {Number} pageSize 页面显示的最大数
-* @param {Number} total 总数
-* @returns {Boolean} hasMore 是否还有下一页
-*/
-function hasNextPage(pageNum, pageSize, total){
-  total = typeof total === 'number' ? total : parseInt(total);
-  return pageNum * pageSize < total;
-};
-
-export default {
+let utils = {
   getBytesLength: getBytesLength,
   getQueryString: getQueryString,
   parseUrl: parseUrl,
@@ -221,10 +178,11 @@ export default {
   randomString: randomString,
   compareVersion: compareVersion,
   isUrl: isUrl,
-  jsonParse: jsonParse,
-  throttle: throttle,
   isObject: isObject,
   getDataUrl: getDataUrl,
-  json2Url:json2Url,
-  hasNextPage: hasNextPage
-}
+  json2Url: json2Url
+};
+// 注入wx对象
+wx.$UTILS = utils;
+
+export default utils;

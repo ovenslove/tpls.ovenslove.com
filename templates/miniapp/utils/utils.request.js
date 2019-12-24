@@ -1,11 +1,4 @@
-// const config = require("../config/config");
-import config from "../config/config";
-import utils from "./utils";
-const error = {};
-const serverKey = config.SERVER_KEY;
-// 需要页面特殊操作错误码
-const PAGE_HANDLE_ERROR_CODE = [500, 9999404, 156600017];
-
+'use strict';
 /**
  * @function 微信请求方法封装
  * @param {string} method 请求类型
@@ -17,7 +10,7 @@ const PAGE_HANDLE_ERROR_CODE = [500, 9999404, 156600017];
  */
 export const requestFn = ({
   method = 'GET',
-  host = config.API_URL,
+  host = wx.$CONFIG.API_URL,
   url = '',
   data = {},
   token = true,
@@ -71,7 +64,7 @@ export const requestFn = ({
       },
       complete: function (res) {
         if (showLoading) wx.hideLoading();
-        console.log('请求完毕-->', url + utils.json2Url(data), res.data || res.errMsg);
+        console.log('请求完毕-->', method, url + wx.$UTILS.json2Url(data), res.data || res.errMsg);
       }
     })
   });
