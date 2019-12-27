@@ -1,8 +1,8 @@
 'use strict';
 const logger = wx.getLogManager ? wx.getLogManager() : null;
 const realLogger = wx.getRealtimeLogManager ? wx.getRealtimeLogManager() : null;
-const appLaunchOptions = wx.getLaunchOptionsSync();
-const debugOnline = Boolean(appLaunchOptions.query.debugOnline) || false;
+const appLaunchOptions = wx.getLaunchOptionsSync() || {};
+const debugOnline = Boolean(appLaunchOptions.query && appLaunchOptions.query.debugOnline) || false;
 console = (function (origConsole) {
   if (!console) console = {};
   let vConsole = {};
@@ -17,4 +17,4 @@ console = (function (origConsole) {
   }
   return vConsole;
 }(console));
-export default null;
+export default console;
