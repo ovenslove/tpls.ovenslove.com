@@ -6,7 +6,6 @@ const Router = {};
  * @param {*} config
  */
 Router.install = function install(App, config) {
-  console.log('Router-Plugin installed');
   wx.navigate2 = function navigate2(route) {
     let pages = getCurrentPages();
     if (pages.length >= 9) {

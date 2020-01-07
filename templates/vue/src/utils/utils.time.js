@@ -92,7 +92,7 @@ Time.prototype.parseTime = function parseTime(time) {
     harfDayZh = '黄昏'
   } else if (d.hours < 24) {
     harfDayZh = '晚上'
-  } else {}
+  }
   d.harf_day = harfDay;
   d.harfdayZh = harfDayZh;
   // 自动计算相对时间

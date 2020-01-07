@@ -5,8 +5,12 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import _v from 'vconsole'
+import API from './service/api'
+// 配置远程调试
 window[_s] = /vc=1/g.test(_h) ? new _v() : null
 Vue.config.productionTip = false
+// 接口注入
+Vue.prototype.$api = API;
 new Vue({
   router,
   store,
