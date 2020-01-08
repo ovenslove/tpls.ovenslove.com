@@ -3,3 +3,4 @@
 npm i pds-cli -g
 pds-cli init
 ```
+根据提示安装即可

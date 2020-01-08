@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    name:'aaa'
+    name:'我是store内的name字段'
   },
   mutations: {
   },
