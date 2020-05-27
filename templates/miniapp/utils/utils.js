@@ -169,6 +169,23 @@ function json2Url(data) {
   }
   return urlStr;
 }
+/**
+ * @function getCustomBar
+ * @description 获取自定义菜单栏的高度属性
+ * @returns
+ */
+function getCustomBar() {
+  let sys = wx.getSystemInfoSync();
+  let statusBarHeight = sys.statusBarHeight || sys.safeArea.top || 20;
+  let distinctHight = sys.platform === 'ios' ? 6 : sys.platform === 'android' ? 8 : 6;
+  let customBar = {
+    statusBarHeight,
+    customBarHeight: statusBarHeight + distinctHight * 2 + 32,
+    platform: sys.platform,
+    distinctHight
+  }
+  return customBar;
+}
 
 let utils = {
   getBytesLength: getBytesLength,
@@ -180,7 +197,8 @@ let utils = {
   isUrl: isUrl,
   isObject: isObject,
   getDataUrl: getDataUrl,
-  json2Url: json2Url
+  json2Url: json2Url,
+  getCustomBar: getCustomBar
 };
 // 注入wx对象
 wx.$UTILS = utils;
